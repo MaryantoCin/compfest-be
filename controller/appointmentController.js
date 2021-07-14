@@ -57,6 +57,7 @@ export const deleteAppointment = async (req, res) => {
 
 export const registerAppoinment = async (req, res) => {
   const appointment = await Appointment.findById(req.params.id);
+  let currentslot = appointment.slot;
   if (!appointment) return res.status(404).json({ message: "Data not found" });
   try {
     if (
@@ -70,7 +71,12 @@ export const registerAppoinment = async (req, res) => {
           { $push: { registrants: req.user._id } },
           { upsert: true, new: true }
         );
-        res.status(200).json(updatedAppointment);
+        const updatedAppointment2 = await Appointment.findByIdAndUpdate(
+          req.params.id,
+          { $set: { slot: currentslot - 1 } },
+          { upsert: true, new: true }
+        );
+        res.status(200).json(updatedAppointment2);
       } else {
         res.status(401).json({ message: "Slot full" });
       }
@@ -84,6 +90,7 @@ export const registerAppoinment = async (req, res) => {
 
 export const cancelAppointment = async (req, res) => {
   const appointment = await Appointment.findById(req.params.id);
+  let currentslot = appointment.slot;
   if (!appointment) return res.status(404).json({ message: "Data not found" });
   try {
     if (
@@ -96,7 +103,12 @@ export const cancelAppointment = async (req, res) => {
         { $pull: { registrants: req.user._id } },
         { upsert: true, new: true }
       );
-      res.status(200).json(updatedAppointment);
+      const updatedAppointment2 = await Appointment.findByIdAndUpdate(
+        req.params.id,
+        { $set: { slot: currentslot + 1 } },
+        { upsert: true, new: true }
+      );
+      res.status(200).json(updatedAppointment2);
     } else {
       res.status(401).json({ message: "User has not registered" });
     }

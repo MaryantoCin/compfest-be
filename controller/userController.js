@@ -33,6 +33,7 @@ export const login = async (req, res) => {
           },
           "RESTFULAPIs"
         ),
+        role: user.role,
       });
     }
   );

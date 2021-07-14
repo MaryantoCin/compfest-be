@@ -1,6 +1,11 @@
 import express from "express";
 
-import { createUser, login, profile } from "../controller/userController.js";
+import {
+  createUser,
+  login,
+  profile,
+  test,
+} from "../controller/userController.js";
 import {
   cancelAppointment,
   createAppointment,

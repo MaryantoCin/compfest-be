@@ -29,6 +29,7 @@ export const login = async (req, res) => {
             email: user.email,
             username: user.username,
             _id: user._id,
+            role: user.role,
           },
           "RESTFULAPIs"
         ),

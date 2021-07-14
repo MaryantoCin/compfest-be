@@ -22,7 +22,7 @@ router.post("/auth/register", createUser);
 router.post("/auth/login", login);
 
 router.get("/appointment", [checkLogin], getAppointments);
-router.get("/appointment/create", [checkAdmin], createAppointment);
+router.post("/appointment/create", [checkAdmin], createAppointment);
 router.patch("/appointment/:id", [checkAdmin], updateAppointment);
 router.delete("/appointment/:id", [checkAdmin], deleteAppointment);
 router.get("/appointment/:id", [checkAdmin], getAppointmentsById);

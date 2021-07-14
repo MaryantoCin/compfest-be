@@ -2,6 +2,7 @@ import Appointment from "../model/Appointment.js";
 
 export const createAppointment = async (req, res) => {
   const appointment = new Appointment(req.body);
+  console.log(appointment);
   try {
     const savedAppointment = await appointment.save();
     res.status(201).json(savedAppointment);

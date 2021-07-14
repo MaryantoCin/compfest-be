@@ -4,6 +4,7 @@ import route from "./route/index.js";
 import cors from "cors";
 import bodyParser from "body-parser";
 import jsonwebtoken from "jsonwebtoken";
+import User from "./model/User.js";
 
 const app = express();
 
@@ -14,6 +15,24 @@ mongoose.connect("mongodb://localhost:27017/compfest_be", {
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Database Connected"));
+
+User.create([
+  {
+    firstName: "Admin",
+    lastName: "Compfest",
+    age: "18",
+    email: "admin@compfest.id",
+    username: "Admin",
+    password: "secret",
+    role: "Administrator",
+  },
+])
+  .then((user) => {
+    console.log("Admin created");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
